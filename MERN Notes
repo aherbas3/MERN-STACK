@@ -1,0 +1,86 @@
+MERN STACK OVERVIEW
+--------------------
+React: front end library, runs in browser
+Node and Express: make backend api we interact w from front end
+    express is a framework for node that lets us easily create apis
+    handle authentication requests
+Mongo: NoSQL database
+
+HOW THEY INTERACT
+1) frontend browser, react runs in the browser
+2) send request from front end to backend. 
+    an express app running in node.js environment
+3) node and express interact with database to access/edit data
+4) once node/express have response from database, send it to front end via json
+
+SET UP GIT REPO
+1) when i finished tut 1 i went to vs code's source control button on sidebar
+    - initialize repo is same as git init in terminal, just creates git repo, no relation to github
+    - instead i clicked publish to github which initializes repo and uploads to github
+
+
+Tutorial 1: Express App Setup
+------------------------------
+Setting up an express app using node.js
+
+SERVER.JS
+the entry file for the backend app. where we register express app.
+1) first install express package
+2) require express package
+
+PACKAGE.JSON
+keep track of dependencies and register custom scripts.
+- make by going to backend folder and npm init -y
+- you can make scripts like dev so when you npm run dev it runs nodemon server.js
+
+EXPRESS
+- install package: npm install express
+- you'll see node_modules folder where package+dependencies were installed
+
+RUN A FILE
+node server.js: but tedious since changes require saving and interrupting last run to ask to run again
+nodemon server.js: detects changes and auto runs again, better
+
+NODEMON
+install: sudo npm install -g nodemon (this is temp solution, normally you'd just do it w/o sudo but i'll find permanent fix later)
+
+TERMINAL
+run commands in background: [command here] &
+interrupt command and return shell prompt: ctrl c
+
+TESTING
+- browser localhost:4000 see welcome to app msg
+    reason: localhost:4000 [enter] sends get request to the server, who responds with json message
+
+.ENV
+for port numbers and sensistive info, we want it to remain invisible, so we usually store these in environment variables in the .env file
+- when pushing to github, add .env to gitignore so it won't be pushed up, remains private
+- to access environment variables, first npm install dotenv
+    dotenv is a package that loads vars into process.env object
+    - to use, must require the package in server.js
+
+BROWSER
+- typing a request in browser and clicking enter sends get requests. for post or delete reqs must instead use js on frontend OR could use Postman before we have that front end to try out the dif routes and requests
+
+POSTMAN
+helps simulate dif types of reqs to our server. helps test out routes we create for our api.
+
+MIDDLEWARE
+code run between request and response, like out app.get we have so far. 
+- global middleware: 
+
+SUMMARY
+1. open new project
+2. make backend folder inside
+3. inside backend, create server.js
+4. inside backend, create package.json (make scripts here to make life easier)
+5. install express package (using npm. also before use npm must have node installed, which i already do)
+6. require express package in server.js
+7. start express app
+8. listen for requests
+9. tested it out by running (manually or nodemon)
+10. react to requests
+11. created environment vars by installing dotenv and creating .env file
+12. require dotenv in server.js to begin using env vars
+13. atp we used postman to test out requests
+14. created some additional middle ware to help log reqs

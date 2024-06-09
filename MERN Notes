@@ -84,3 +84,46 @@ SUMMARY
 12. require dotenv in server.js to begin using env vars
 13. atp we used postman to test out requests
 14. created some additional middle ware to help log reqs
+
+Tutorial 2: Express Router and API Routes
+------------------------------------------
+set up routes or api endpoints for express api
+
+PLANNING API ENDPOINTS
+GET /workouts           gets all workout docs
+POST /workouts          creates a new workout doc
+GET /workouts:id        gets single workout doc
+DELETE /workouts/:id    deletes single workout
+PATCH /workouts/:id     updates single workout
+- ids are route params
+
+ROUTES FOLDER
+we want to add routes cleanly. we could've added them straight to server.js tho.
+> WORKOUTS.JS
+    don't have access to app in here, so we use the express router
+
+MIDDLEWARE
+Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. Typically added using .use() method
+    - types of middleware
+        global: apply to all routes
+        built-in: provided by express for common tasks
+        route-specific: for specific routes
+        a route is global/route specific and built-in/not built-in
+    - order
+        matters! also, place global middleware before local ones
+    - next
+        global: if its custom, typically have to explicitly call next
+        built-in: implicitly call next
+        route-specific: we normally explicitly call it, but some can be implicitly called
+
+SUMMARY
+1. create routes folder in backend
+2. create workouts.js in routes
+3. in workout.js req express
+4. create router
+5. export router in the end
+6. now in server.js require routes
+7. add routing middleware
+8. in workouts.js create all the routes' handlers
+9. in servere.js add json parsing middleware
+10. in Postman add all routes so we can use for testing

@@ -3,6 +3,9 @@ require('dotenv').config()
 //REQUIRE EXPRESS
 const express =  require('express')
 
+//REQUIRE ROUTER
+const workoutRoutes = require('./routes/workouts')
+
 //CREATE EXPRESS APP
 const app = express()
 
@@ -12,19 +15,20 @@ app.listen(process.env.PORT, () => {
     console.log('listening on port 4000')
 })
 
-//REACT TO REQUESTS
-// setting up a route handler
-// responds to get request coming in, specifies route to local host port 4000/ (the route of the domain)
-// so if you go to the route, it'll fire a func to handle the request and takes in req and res object. 
-// send back a json string, which is our message
-app.get('/', (req, res) => {
-    res.json({msg: 'welcome to the app'})
-})
-
 //MIDDLEWARE
+//Logging Middleware
 // when we get a request, itll first run to here since this is the global middleware, then since we put next it'll run to the next piece of middleware
 // we're using it rn to log requests we get
 app.use((req, res, next) => {
     console.log(req.path, req.method)
     next()
 })
+//Json Parsing Middleware
+//any reqs that come in it looks at the body of it, the data, and attaches it to the req obj
+app.use(express.json())
+//Route Middleware
+// grabs all workout routes we defined and uses them in the app.
+// ex) if in routes.js we have a / get route it'd be the same as writing app.get('/', ()=>{}) in this file
+// we also added the string bc when we fire the request to that route, we want to use workoutRoutes
+// ex) now if someone fires req to /api/workouts/ then it'd use the router.get('/',()=>{}) func
+app.use('/api/workouts', workoutRoutes)

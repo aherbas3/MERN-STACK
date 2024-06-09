@@ -1,0 +1,186 @@
+MERN STACK OVERVIEW
+--------------------
+React: front end library, runs in browser
+Node and Express: make backend api we interact w from front end
+    express is a framework for node that lets us easily create apis
+    handle authentication requests
+Mongo: NoSQL database
+
+HOW THEY INTERACT
+1) frontend browser, react runs in the browser
+2) send request from front end to backend. 
+    an express app running in node.js environment
+3) node and express interact with database to access/edit data
+4) once node/express have response from database, send it to front end via json
+
+SET UP GIT REPO
+1) when i finished tut 1 i went to vs code's source control button on sidebar
+    - initialize repo is same as git init in terminal, just creates git repo, no relation to github
+    - instead i clicked publish to github which initializes repo and uploads to github
+
+
+Tutorial 1: Express App Setup
+------------------------------
+Setting up an express app using node.js
+
+SERVER.JS
+the entry file for the backend app. where we register express app.
+1) first install express package
+2) require express package
+
+PACKAGE.JSON
+keep track of dependencies and register custom scripts.
+- make by going to backend folder and npm init -y
+- you can make scripts like dev so when you npm run dev it runs nodemon server.js
+
+EXPRESS
+- install package: npm install express
+- you'll see node_modules folder where package+dependencies were installed
+
+RUN A FILE
+node server.js: but tedious since changes require saving and interrupting last run to ask to run again
+nodemon server.js: detects changes and auto runs again, better
+
+NODEMON
+install: sudo npm install -g nodemon (this is temp solution, normally you'd just do it w/o sudo but i'll find permanent fix later)
+
+TERMINAL
+run commands in background: [command here] &
+interrupt command and return shell prompt: ctrl c
+
+TESTING
+- browser localhost:4000 see welcome to app msg
+    reason: localhost:4000 [enter] sends get request to the server, who responds with json message
+
+.ENV
+for port numbers and sensistive info, we want it to remain invisible, so we usually store these in environment variables in the .env file
+- when pushing to github, add .env to gitignore so it won't be pushed up, remains private
+- to access environment variables, first npm install dotenv
+    dotenv is a package that loads vars into process.env object
+    - to use, must require the package in server.js
+
+BROWSER
+- typing a request in browser and clicking enter sends get requests. for post or delete reqs must instead use js on frontend OR could use Postman before we have that front end to try out the dif routes and requests
+
+POSTMAN
+helps simulate dif types of reqs to our server. helps test out routes we create for our api.
+
+MIDDLEWARE
+code run between request and response, like out app.get we have so far. 
+- global middleware: 
+
+SUMMARY
+1. open new project
+2. make backend folder inside
+3. inside backend, create server.js
+4. inside backend, create package.json (make scripts here to make life easier)
+5. install express package (using npm. also before use npm must have node installed, which i already do)
+6. require express package in server.js
+7. start express app
+8. listen for requests
+9. tested it out by running (manually or nodemon)
+10. react to requests
+11. created environment vars by installing dotenv and creating .env file
+12. require dotenv in server.js to begin using env vars
+13. atp we used postman to test out requests
+14. created some additional middle ware to help log reqs
+
+Tutorial 2: Express Router and API Routes
+------------------------------------------
+set up routes or api endpoints for express api
+
+PLANNING API ENDPOINTS
+GET /workouts           gets all workout docs
+POST /workouts          creates a new workout doc
+GET /workouts:id        gets single workout doc
+DELETE /workouts/:id    deletes single workout
+PATCH /workouts/:id     updates single workout
+- ids are route params
+
+ROUTES FOLDER
+we want to add routes cleanly. we could've added them straight to server.js tho.
+> WORKOUTS.JS
+    don't have access to app in here, so we use the express router
+
+MIDDLEWARE
+Middleware functions are functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle. Typically added using .use() method
+    - types of middleware
+        global: apply to all routes
+        built-in: provided by express for common tasks
+        route-specific: for specific routes
+        a route is global/route specific and built-in/not built-in
+    - order
+        matters! also, place global middleware before local ones
+    - next
+        global: if its custom, typically have to explicitly call next
+        built-in: implicitly call next
+        route-specific: we normally explicitly call it, but some can be implicitly called
+
+SUMMARY
+1. create routes folder in backend
+2. create workouts.js in routes
+3. in workout.js req express
+4. create router
+5. export router in the end
+6. now in server.js require routes
+7. add routing middleware
+8. in workouts.js create all the routes' handlers
+9. in servere.js add json parsing middleware
+10. in Postman add all routes so we can use for testing
+
+
+Tutorial 3: MongoDB Atlas and Mongoose
+---------------------------------------
+MONGODB ATLAS
+online database?
+1) create a database, free version, using aws and location of choice
+2) go to network access and add ip addresses as needed
+3) connect to application using native drivers
+4) npm install mongodb
+5) copy connection string
+6) create env var mongo_uri with connection string
+
+MONGOOSE
+ODM (object data modelling) library. wraps mongodb with an extra layer that lets us use methods to r/w database docs + lets us declare models and schemas to ensure a more strict data structure. ex) schema for blog doc that says every blog must have a title, body, etc. if we tried to save a blog w/o those props, mongo wouldn't let us. mongodb alone doesn't have this feature. we're also gonna us mongoose to connect to the database inside the server.js.
+1) npm install mongoose
+2) in server.js require mongoose
+3) connect to db in server.js
+4) make sure to only start listening once connection to db is established
+
+SUMMARY
+1. set up mondoDB atlas
+2. make env var mongo_uri
+3. connect to db in server.js
+
+Tutorial 4: Models and Schemas
+-------------------------------
+now we need to interact w db to add, retrieve, and update docs. we'll do that inside routehandler funcs.
+
+MODELS
+folder in backend
+> WORKOUTMODEL.JS
+    holds schema and models. schemas define structure of doc in db, model applies schema to a model and then uses model to interact with a collection of that name.
+
+POST A WORKOUT
+1) in workouts.js, require Workout model
+2) in post route, parse data from req
+3) create try/catch block
+4) in try, create workout doc using Workout.create (since create asynch, make whole method asynch) and pass relevant props
+5) send a response, which is workout doc
+6) in error, send error message
+
+POSTMAN
+test post request by giving 3 params and receiving workout doc in response
+1) go to post req
+2) body>raw>json
+3) write post req 
+4) send shows you response
+
+SUMMARY
+1. create a models folder
+2. inside it create workout model outlining schema and model
+3. export model to workouts.js
+4. workouts.js must require workout model
+5. in workouts.js, fill out post route
+6. test in postman various requests/responses
+7. test in mongodb collections whether they're created accurately (error ones won't create)

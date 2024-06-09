@@ -127,3 +127,28 @@ SUMMARY
 8. in workouts.js create all the routes' handlers
 9. in servere.js add json parsing middleware
 10. in Postman add all routes so we can use for testing
+
+
+Tutorial 3: MongoDB Atlas and Mongoose
+---------------------------------------
+MONGODB ATLAS
+online database?
+1) create a database, free version, using aws and location of choice
+2) go to network access and add ip addresses as needed
+3) connect to application using native drivers
+4) npm install mongodb
+5) copy connection string
+6) create env var mongo_uri with connection string
+
+MONGOOSE
+ODM (object data modelling) library. wraps mongodb with an extra layer that lets us use methods to r/w database docs + lets us declare models and schemas to ensure a more strict data structure. ex) schema for blog doc that says every blog must have a title, body, etc. if we tried to save a blog w/o those props, mongo wouldn't let us. mongodb alone doesn't have this feature. we're also gonna us mongoose to connect to the database inside the server.js.
+1) npm install mongoose
+2) in server.js require mongoose
+3) connect to db in server.js
+4) make sure to only start listening once connection to db is established
+
+SUMMARY
+1. set up mondoDB atlas
+2. make env var mongo_uri
+3. connect to db in server.js
+

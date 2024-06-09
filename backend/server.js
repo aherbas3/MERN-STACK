@@ -3,17 +3,14 @@ require('dotenv').config()
 //REQUIRE EXPRESS
 const express =  require('express')
 
+//REQUIRE MONGOOSE
+const mongoose = require('mongoose')
+
 //REQUIRE ROUTER
 const workoutRoutes = require('./routes/workouts')
 
 //CREATE EXPRESS APP
 const app = express()
-
-//LISTEN FOR REQUESTS
-// we chose port 4000, when it listens we fire function
-app.listen(process.env.PORT, () => {
-    console.log('listening on port 4000')
-})
 
 //MIDDLEWARE
 //Logging Middleware
@@ -32,3 +29,18 @@ app.use(express.json())
 // we also added the string bc when we fire the request to that route, we want to use workoutRoutes
 // ex) now if someone fires req to /api/workouts/ then it'd use the router.get('/',()=>{}) func
 app.use('/api/workouts', workoutRoutes)
+
+//CONNECT TO DB
+// this will try to connect to the db asynchronously, so it returns a promise
+// only start listening for requests once connected to db, otherwise error
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        //LISTEN FOR REQUESTS
+        // we chose port 4000, when it listens we fire function
+        app.listen(process.env.PORT, () => {
+        console.log('connected to db and listening on port', process.env.PORT)
+        })
+    })
+    .catch((error) => {
+        console.log(error)
+    })

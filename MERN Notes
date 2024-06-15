@@ -223,3 +223,35 @@ SUMMARY
 - and inside server.js we registered all of the routes to /api/workouts
 
 So we've created our API and all of our endpoints
+
+Tutorial 7: Making a React App
+-------------------------------
+SETUP
+1) cd to parent directory
+2) npx create-react-app frontend
+    - frontend folder created + populated
+    - KEEP app.js, index.css, and index.js
+3) in index.js 
+    - remove reportWebVitals import
+    - remove reportWebVitals() method
+4) in app.js 
+    - get rid of imports
+    - clear out most of app function so we can start anew
+    - install react router dom package
+
+TERMINAL
+npm start: starts the development server
+
+REACT ROUTER DOM PACKAGE
+so we can add pages later
+Install: cd frontend, npm install react-router-dom
+
+CREATING PAGES
+1) set up the router in app.js
+2) create a pages folder in src folder to hold page elements you'll use in app.js
+3) inside pages create home.js and inside it the Home element and export at bottom of file
+4) in app.js import the Home element from home.js
+5) test using npm start
+
+NPM START
+a script in our package.json file in our frontend folder. so, you call it from there.

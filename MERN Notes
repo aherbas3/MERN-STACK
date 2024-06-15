@@ -43,6 +43,7 @@ nodemon server.js: detects changes and auto runs again, better
 
 NODEMON
 install: sudo npm install -g nodemon (this is temp solution, normally you'd just do it w/o sudo but i'll find permanent fix later)
+- when you run nodemon you have to do it in the directory where server.js is
 
 TERMINAL
 run commands in background: [command here] &
@@ -207,3 +208,18 @@ SUMMARY
 5. in server.js, import those methods
 6. use to make route handling easier
 7. test out routes in postman
+
+Tutorial 6: Controllers (part 2)
+---------------------------------
+
+PATCH
+- when we send a patch request, we send data with our request which is what we want to update. for example, might send out a json obj with title and reps properties. 
+- the way we get the properties that we send in the body is using req.body
+
+SUMMARY
+- we have all our controller functions
+- we have all our routes which reference those controller functions
+- we have our model for our workout documents
+- and inside server.js we registered all of the routes to /api/workouts
+
+So we've created our API and all of our endpoints

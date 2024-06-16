@@ -1,3 +1,10 @@
+
+:root {
+  --primary: green;
+  --error: red;
+}
+
+
 body {
   background: #f1f1f1;
   margin: 0;
@@ -25,4 +32,46 @@ header a{
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
+}
+
+
+
+
+.home {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 100px;
+}
+
+.workoutDetails {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+
+.workoutDetails h4{
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+
+.workoutDetails p{
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.workoutDetails span{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  padding:6px;
+  border-radius: 50%;
+  color: #333;
+
 }

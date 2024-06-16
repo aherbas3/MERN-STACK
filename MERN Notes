@@ -255,3 +255,39 @@ CREATING PAGES
 
 NPM START
 a script in our package.json file in our frontend folder. so, you call it from there.
+
+SUMMARY
+- created a react app
+- created a home page
+- added limited styling
+
+Tutorial 8: Fetching Data
+-------------------------
+
+HOME PAGE
+1) import useffect and usestate hooks from react in home.js
+    - useEffect: fires a function when the component is rendered. to fire it only once when the component first renders, so the second arg is an empty dependency array
+    - logic: we fetch workouts from the api. if all goes well, we change the state to reflect the json response from the backend.
+2) return the workout titles
+3) to test out, we need to get backend running
+    1. open new terminal
+    2. cd into backend
+    3. npm run dev
+    4. if you inspect page, you'll see errors because we're communicating between dif servers. port 4000 on backend and 3000 on frontend
+
+ERROR (communicating between dif servers)
+to fix this, 
+1) go to frontend>package.json
+2) add a proxy equal to the development server address (address of node server is 4000)
+    - tells react dev server to proxy any reqs that it doesn't recognize to our api server at this address
+    - to make this work, we also have to make our requests without explicitly declaring the port number in the request url
+3) to test, must close and relaunch front end using npm start. also make sure backend is running. should be fine now, and our workouts in our db should pop up!
+
+ERROR (capitalization)
+in react, components must be capitalized to avoid confusion with html tags. by convention, we also capitalize the component's file names too.
+
+SUMMARY
+- created navbar component and imported in app.js
+- created home.js to create home component and imported in app.js
+- within home component used workoutdetails component aswell
+- styled all 3

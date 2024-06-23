@@ -93,7 +93,7 @@ set up routes or api endpoints for express api
 PLANNING API ENDPOINTS
 GET /workouts           gets all workout docs
 POST /workouts          creates a new workout doc
-GET /workouts:id        gets single workout doc
+GET /workouts/:id        gets single workout doc
 DELETE /workouts/:id    deletes single workout
 PATCH /workouts/:id     updates single workout
 - ids are route params
@@ -291,3 +291,37 @@ SUMMARY
 - created home.js to create home component and imported in app.js
 - within home component used workoutdetails component aswell
 - styled all 3
+
+Tutorial 9: Making a New Workout Form
+---------------------------------------
+
+START UP
+- cd backend and npm run dev
+- cd frontend and npm start
+- now mongodb cluster should be connected and site should launch
+
+after starting up we made a new workoutform component so we can create new workouts and output error messages if the input fields weren't correct. I began encountering an error that took up the entire screen instead of popping up a message. 
+
+THE ERROR
+----------
+websocket error and post handling error showed up in browser dev tools console saying that the post request sent in handlesubmit was being rejected. Code seemed fine. The solution turned out to be npm cache cleaning and reinstalling dependencies. Sometimes, issues like WebSocket errors or POST request failures can arise due to incomplete or corrupted dependencies.
+- found out the root cause of the error because in vs code frontend console, after npm start i'd get this: 
+     'ENOENT: no such file or directory' 
+     which in the frontend is related to a missing file or directory within the node_modules cache. This typically happens due to corrupted cache or incomplete installations of dependencies
+- STEPS TO FIX
+    in frontend
+    1) npm cache clean --force
+    2) rm -rf node_modules
+    3) npm install
+    4) run backend and frontend again
+easy fix but took forever to find. Don't let errors in the console go unnoticed.
+
+TESTING WORKOUTFORM
+---------------------
+-when correctly filling out all fields, after refreshing the new workout should appear in the list
+- when incorrectly filling out all fields, a small error message should print above the submit button and also a 400 bad request message should pop up in broswer console
+
+
+
+
+

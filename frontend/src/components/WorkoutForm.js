@@ -1,6 +1,9 @@
 import {useState} from "react"
+import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 const WorkoutForm = () => {
+    const {dispatch} = useWorkoutsContext()
+
     const [title, setTitle] = useState('')
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
@@ -36,6 +39,10 @@ const WorkoutForm = () => {
             setReps('')
             setError(null)
             console.log('new workout added', json)
+            // when adding new workout, we don't have to refresh screen to see it anymore because we used workoutContext to update the global state
+            // whenever the db is initially rendered, and so we just have to use that here too but now the type of the object we pass to dispatch will
+            // be the create_workout type. this will update the global context accordingly and once again keep the ui in sync with the db
+            dispatch({type: 'CREATE_WORKOUT', payload: json})
         }
     }
 

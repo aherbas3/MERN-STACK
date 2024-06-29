@@ -303,7 +303,6 @@ START UP
 after starting up we made a new workoutform component so we can create new workouts and output error messages if the input fields weren't correct. I began encountering an error that took up the entire screen instead of popping up a message. 
 
 THE ERROR
-----------
 websocket error and post handling error showed up in browser dev tools console saying that the post request sent in handlesubmit was being rejected. Code seemed fine. The solution turned out to be npm cache cleaning and reinstalling dependencies. Sometimes, issues like WebSocket errors or POST request failures can arise due to incomplete or corrupted dependencies.
 - found out the root cause of the error because in vs code frontend console, after npm start i'd get this: 
      'ENOENT: no such file or directory' 
@@ -322,6 +321,35 @@ TESTING WORKOUTFORM
 - when incorrectly filling out all fields, a small error message should print above the submit button and also a 400 bad request message should pop up in broswer console
 
 
+Tutorial 10: Adding React Context
+----------------------------------
+React context provides global states to many dif components in an app and we can also update those states by dispatching actions from those components.
 
+CONTEXTS
+Contexts in React are used to share state across the component tree without having to pass props down manually at every level.
+Components:
+    - Context Object: Created using createContext(). It provides two components: Provider and Consumer.
+    - Provider: Used to wrap parts of the component tree and provide the context value.
+    - Consumer: Used to consume the context value.
+In My Code:
+    - WorkoutsContext: Created using createContext(). It will be used to provide and consume the workouts state.
+    - WorkoutsContextProvider: Wraps around any component that needs access to the workouts context. It uses WorkoutsContext.Provider to provide the context value.
 
+USEREDUCER
+useReducer is a hook used for managing complex state logic. It is an alternative to useState and is useful when the state logic depends on the previous state or involves multiple sub-values.
+Components:
+    - Reducer Function: A function that takes the current state and an action, and returns a new state.
+    - Dispatch Function: A function returned by useReducer that is used to send actions to the reducer.
+    - State Object: The current state returned by useReducer.
+In My Code:
+    - Reducer Function (workoutsReducer): Handles state changes based on the action type (SET_WORKOUTS and CREATE_WORKOUT). It takes the current state and an action object, then returns a new state.
+    - State and Dispatch: The state object and dispatch function are obtained by calling useReducer with the workoutsReducer and an initial state ({ workouts: null }).
 
+HOW THEY WORK TOGETHER IN MY CODE
+    - Creating the Context: WorkoutsContext is created using createContext().
+    - Reducer Function: workoutsReducer defines how the state should change in response to actions.
+    - Using useReducer: WorkoutsContextProvider component uses useReducer to manage the workouts state.
+    - Providing the Context: WorkoutsContextProvider uses WorkoutsContext.Provider to make the state and dispatch function available to its children.
+    - Consuming the Context: Any component wrapped by WorkoutsContextProvider can access the workouts state and dispatch function using useContext(WorkoutsContext).
+
+This setup allows you to manage the workouts state globally, update it efficiently, and avoid prop drilling (passing props down multiple levels).

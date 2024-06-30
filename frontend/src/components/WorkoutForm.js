@@ -1,4 +1,4 @@
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 
 const WorkoutForm = () => {
@@ -8,6 +8,7 @@ const WorkoutForm = () => {
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
         //prevent the page from being refreshed when form is submitted
@@ -25,15 +26,15 @@ const WorkoutForm = () => {
         })
 
         const json = await response.json()
-            console.log('Response:', response);
-            console.log('JSON:', json);
 
         if (!response.ok) {
             console.error('Error:', json);
-            setError(json.error || 'Something went wrong');
+            setEmptyFields(json.emptyFields || [])
+            setError(json.error); 
         }
 
         if (response.ok) {
+            setEmptyFields([])
             setTitle('')
             setLoad('')
             setReps('')
@@ -44,6 +45,7 @@ const WorkoutForm = () => {
             // be the create_workout type. this will update the global context accordingly and once again keep the ui in sync with the db
             dispatch({type: 'CREATE_WORKOUT', payload: json})
         }
+
     }
 
     return (
@@ -57,6 +59,9 @@ const WorkoutForm = () => {
                 onChange={(e)=>setTitle(e.target.value)}
                 //dafault input
                 value={title}
+                // we will give the input an error class if we have en empty title field, and no class if no error in title field
+                // we'll apply the same changes to the other inputs
+                className={(emptyFields.includes('title')) ? 'error' : ''}
             />
 
             <label>Load in Kg:</label>
@@ -66,6 +71,7 @@ const WorkoutForm = () => {
                 onChange={(e)=>setLoad(e.target.value)}
                 //dafault input
                 value={load}
+                className={(emptyFields.includes('load')) ? 'error' : ''}
             />
 
             <label>Reps:</label>
@@ -75,6 +81,7 @@ const WorkoutForm = () => {
                 onChange={(e)=>setReps(e.target.value)}
                 //dafault input
                 value={reps}
+                className={(emptyFields.includes('reps')) ? 'error' : ''}
             />
 
             <button type="submit">Add Workout</button>

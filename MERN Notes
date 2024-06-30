@@ -316,7 +316,6 @@ websocket error and post handling error showed up in browser dev tools console s
 easy fix but took forever to find. Don't let errors in the console go unnoticed.
 
 TESTING WORKOUTFORM
----------------------
 -when correctly filling out all fields, after refreshing the new workout should appear in the list
 - when incorrectly filling out all fields, a small error message should print above the submit button and also a 400 bad request message should pop up in broswer console
 
@@ -353,3 +352,17 @@ HOW THEY WORK TOGETHER IN MY CODE
     - Consuming the Context: Any component wrapped by WorkoutsContextProvider can access the workouts state and dispatch function using useContext(WorkoutsContext).
 
 This setup allows you to manage the workouts state globally, update it efficiently, and avoid prop drilling (passing props down multiple levels).
+
+Tutorial 11: Deleting Data
+---------------------------
+all I did was add the DELETE_WORKOUT action type and implement it when deleting a workout by clicking the new delete button
+
+Tutorial 12: Handling Error Responses
+--------------------------------------
+When user incorrectly fills out form fields, our error message is not very user friendly since it's the one provided by mongoose. 
+
+SOLUTION
+- using variable emptyFields, abbreviated ef. when creating a new workout, before we add the doc to db we check if any of the fields are empty and if so we push them onto the array ef.
+- if the array isn't empty after the check, we send an error with a custom message and also send the variable ef itself.
+- in workoutform.js, once the form is submitted we check if the response is okay. if it's not okay, we populate our local emptyfields state using json.emptyFields. if it's okay, then we clear the state.
+- we use the state to dynamically style the ui. the input boxes now have a conditional class that gives them a red border if the form was submitted without properly filling out the field.

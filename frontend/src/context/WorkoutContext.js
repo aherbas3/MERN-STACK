@@ -23,6 +23,11 @@ export const workoutsReducer = (state, action) => {
                 //add single new workout to our existing array of workouts
                 workouts: [action.payload, ...state.workouts]
             }
+        case 'DELETE_WORKOUT':
+            return {
+                // the filter func returns true if we want the workout to remain in the new array
+                workouts: state.workouts.filter( (w) => w._id !== action.payload._id)
+            }
         default:
             return state
     }

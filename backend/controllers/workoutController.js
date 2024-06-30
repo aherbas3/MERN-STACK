@@ -34,12 +34,30 @@ const getWorkout = async (req,res) => {
 const createWorkout = async (req, res) => {
     //parse info from req
     const {title, load, reps} = req.body
+
+    let emptyFields = []
+    if (!title) {
+        emptyFields.push('title')
+    }
+    if (!load) {
+        emptyFields.push('load')
+    }
+    if (!reps) {
+        emptyFields.push('reps')
+    }
+    if (emptyFields.length > 0) {
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
+    }
+
+
     try {
         //create a doc using parsed info, store doc and id in the const
         const workout = await Workout.create({title, load, reps})
         //send response w status code and json of workout object/doc we got back
         res.status(200).json(workout)
     } catch (error) {
+        // the error was given by mongoose if we didn't adhere to the schema and our user forgot to input required fields
+        // That error message is ugly. We made it cuter now using the emptyFields variable above^
         res.status(400).json({error: error.message})
     }
 }

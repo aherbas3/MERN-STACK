@@ -110,3 +110,13 @@ div.error {
   border-radius: 4px;
   margin: 20px 0;
 }
+
+input.error {
+  border: 1px solid var(--error)
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid black; /* or any custom style */
+  box-shadow: 0 0 5px #ffefef;
+}

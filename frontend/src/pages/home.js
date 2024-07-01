@@ -1,13 +1,15 @@
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 
 //components
 import WorkoutDetails from '../components/WorkoutDetails'
 import WorkoutForm from '../components/WorkoutForm'
+import EditForm from '../components/EditForm'
 
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 
 const Home = () => {
-    // 
+    const [editing, setEditing] = useState(false)
+    const [editWorkout, setEditWorkout] = useState(null); //workout we're editing
     const {workouts, dispatch} = useWorkoutsContext()
 
     useEffect(() => {
@@ -24,7 +26,12 @@ const Home = () => {
         }
 
         fetchWorkouts()
-    }, [])
+    }, [dispatch])
+
+    const handleEditClick = (workout) => {
+        setEditing(true); // Set editing state to true
+        setEditWorkout(workout); // Set the specific workout data for editing
+    };
 
     return (
         <div className="home">
@@ -32,10 +39,15 @@ const Home = () => {
                 {workouts && workouts.map((workout)=>(
                 //only if we have a value for workouts we'll start mapping through them
                 // as a prop we'll pass in the workout object
-                    <WorkoutDetails key={workout._id} workout={workout} />
+                    <WorkoutDetails key={workout._id} workout={workout} onEditClick={() => handleEditClick(workout)}/>
                 ))}
             </div>
-            <WorkoutForm/>
+            
+            {editing ? (
+                <EditForm workout={editWorkout} setEditing={setEditing}/>
+            ) : (
+                <WorkoutForm />
+            )}
         </div>
     )
 }

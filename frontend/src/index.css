@@ -65,18 +65,24 @@ header a{
 }
 
 .workoutDetails span{
-  position: absolute;
-  top: 20px;
-  right: 20px;
   cursor: pointer;
   background: #f1f1f1;
   padding:6px;
   border-radius: 50%;
   color: #333;
-
 }
 
+.workoutDetails .del-icon{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 
+.workoutDetails .edit-icon{
+  position: absolute;
+  top: 20px;
+  right: 60px;
+}
 
 label, input {
   display: block;

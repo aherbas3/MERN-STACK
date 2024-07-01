@@ -366,3 +366,20 @@ SOLUTION
 - if the array isn't empty after the check, we send an error with a custom message and also send the variable ef itself.
 - in workoutform.js, once the form is submitted we check if the response is okay. if it's not okay, we populate our local emptyfields state using json.emptyFields. if it's okay, then we clear the state.
 - we use the state to dynamically style the ui. the input boxes now have a conditional class that gives them a red border if the form was submitted without properly filling out the field.
+
+Tutorial 13: Final Touches
+---------------------------
+
+Goals:
+    1) add delete and edit icons
+        - used google fonts (material symbols & icons)
+    2) edit functionality
+        - so far set it up so that clicking the edit button displays the edit form w prefilled values. the cancel button works.
+        - todo: submit changes button
+    3) format createdAt property in a user friendly way
+        - npm install date-fns to use the package
+
+Future Goals:
+    1) pagination
+    2) search bar
+    3) user authentication

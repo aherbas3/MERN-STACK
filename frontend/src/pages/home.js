@@ -10,7 +10,7 @@ import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 const Home = () => {
     const [editing, setEditing] = useState(false)
     const [editWorkout, setEditWorkout] = useState(null); //workout we're editing
-    const {workouts, dispatch} = useWorkoutsContext()
+    const {workouts, dispatch} = useWorkoutsContext() //workouts is given to us by the hook useWorkoutsContext
 
     useEffect(() => {
         const fetchWorkouts = async () => {
@@ -26,7 +26,7 @@ const Home = () => {
         }
 
         fetchWorkouts()
-    }, [dispatch])
+    }, [dispatch]) // we basically set the workouts anytime our dispatch function changes
 
     const handleEditClick = (workout) => {
         setEditing(true); // Set editing state to true

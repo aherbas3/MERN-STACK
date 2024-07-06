@@ -28,6 +28,18 @@ export const workoutsReducer = (state, action) => {
                 // the filter func returns true if we want the workout to remain in the new array
                 workouts: state.workouts.filter( (w) => w._id !== action.payload._id)
             }
+        case 'EDIT_WORKOUT': 
+            const updatedWorkouts = state.workouts.map((w) => 
+                w._id === action.payload.id 
+                    ? { ...w, title: action.payload.title, load: action.payload.load, reps: action.payload.reps, createdAt: action.payload.createdAt }
+                    : w
+            )
+            console.log('payload', action.payload)
+            console.log('Updated workouts:', updatedWorkouts)
+
+            return {
+                workouts: updatedWorkouts
+            }
         default:
             return state
     }

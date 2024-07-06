@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 //CREATE SPECIFIC SCHEMA
 // first arg descs how obj looks
-// second arg auto adds 2 props telling when a doc was created and updated
+// second arg auto adds 2 props telling when a doc was created and updated.
 const workoutSchema = new Schema({
     title: {
         type: String,

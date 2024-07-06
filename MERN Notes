@@ -383,3 +383,26 @@ Future Goals:
     1) pagination
     2) search bar
     3) user authentication
+
+7/3/24
+Today I finished the submit changes button. lots of small issues built up. here are some things I learned:
+    - !== is preferred over != because !== checks not only that values are the same but also types
+    - useState hook updates states asynchronously, so not immediately.
+
+7/6/24
+More things I'm learning
+    - just because the input box has type="number" doesn't mean the input will be treated as a number. the box will not allow you to submit characters that aren't numerical, but the input value itself will be treated as a string. This is because the value of an input field in the DOM is always a string. So really, my loads and reps are actually strings. 
+    - I had an issue with updating the error state in my editForm when fields were left empty and submitted. Although the api returned a response with the correct error message I wanted, it wasn't appearing in a little red box like it would in workoutForm. Also, console logs showed that the error state was never even being updated even if I called setError(json.error). Turns out, the problem lied in the asynchronous nature of the setState hook. I had been calling setEditing(false) right after setError. This led React to batch these updates together during the next re-render cycle. When it was time to carry out both actions, React decided that changing the error state would be pointless since the component would be unmounted anyways, so it decided to ignore setError and instead prioritize setEditing. This is so it doesn't waste resources on unnecessary tasks, optimizing performance. 
+        - The solution was to get rid of setEditing() and replace it with return. This made it so we only unmounted the component when no changes were made or valid changes were made. If invalid changes were made, we stayed on the editForm component and displayed an error message. 
+
+        if (!response.ok) {
+                        console.error('Error:', json);
+                        setEmptyFields(json.emptyFields || [])
+
+                        console.log('json.error is:', json.error)
+                        setError(json.error);
+                        console.log('Setting error to:', json.error);
+                        return; //used to be setEditing(false) and cause errors
+                    }
+
+This marks the end of Stage 1 of Workout Buddy. The site works as intended. During Stage 2 I'll add authentication so each user can only access their own workout information. 
